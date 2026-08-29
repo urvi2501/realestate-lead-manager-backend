@@ -2,7 +2,7 @@ package RealEstateLeadManager.controller;
 
 import RealEstateLeadManager.entity.User;
 import RealEstateLeadManager.repository.UserRepository;
-
+import RealEstateLeadManager.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,14 +15,18 @@ public class AuthController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public AuthController(
+ public AuthController(
         UserRepository userRepository,
-        PasswordEncoder passwordEncoder) {
+        PasswordEncoder passwordEncoder,
+        JwtService jwtService) {
 
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
+    this.jwtService = jwtService;
 }
+   
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User loginUser) {
 
@@ -34,7 +38,12 @@ public class AuthController {
     user.get().getPassword()
 )) {
 
-            return ResponseEntity.ok(user.get());
+            String token = jwtService.generateToken(
+        user.get().getEmail(),
+        user.get().getRole()
+);
+
+return ResponseEntity.ok(token);
         }
 
         return ResponseEntity
@@ -42,6 +51,19 @@ public class AuthController {
                 .body("Invalid email or password");
     }
 
+@PostMapping("/create-test-user")
+public ResponseEntity<String> createTestUser() {
 
+    User user = new User();
+
+    user.setName("Test User");
+    user.setEmail("user@gmail.com");
+    user.setPassword(passwordEncoder.encode("user123"));
+    user.setRole("USER");
+
+    userRepository.save(user);
+
+    return ResponseEntity.ok("Test USER created successfully");
+}
    
 }

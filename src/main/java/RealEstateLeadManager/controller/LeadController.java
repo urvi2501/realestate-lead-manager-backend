@@ -5,13 +5,14 @@ import RealEstateLeadManager.service.LeadService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import RealEstateLeadManager.entity.Customer;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/leads")
 @CrossOrigin(origins = "http://localhost:5173")
 public class LeadController {
+
 
     private final LeadService leadService;
 
@@ -59,4 +60,24 @@ public class LeadController {
 
         return ResponseEntity.ok("Lead deleted successfully");
     }
+
+    // CONVERT LEAD TO CUSTOMER
+@PostMapping("/{id}/convert")
+public ResponseEntity<?> convertLeadToCustomer(
+        @PathVariable Long id) {
+
+    try {
+
+        Customer customer =
+                leadService.convertLeadToCustomer(id);
+
+        return ResponseEntity.ok(customer);
+
+    } catch (RuntimeException e) {
+
+        return ResponseEntity
+                .badRequest()
+                .body(e.getMessage());
+    }
+}
 }
