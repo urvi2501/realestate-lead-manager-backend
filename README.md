@@ -161,7 +161,7 @@ Windows:
 The backend runs on:
 
 
-http://localhost:8080
+http://https://realestate-lead-manager-backend-production.up.railway.app
 
 
 
