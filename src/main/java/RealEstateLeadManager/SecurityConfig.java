@@ -57,7 +57,10 @@ public class SecurityConfig {
             new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-            List.of("http://localhost:5173")
+             List.of(
+        "http://localhost:5173",
+        "https://realestate-lead-manager-production.up.railway.app"
+    )
         );
 
         configuration.setAllowedMethods(
