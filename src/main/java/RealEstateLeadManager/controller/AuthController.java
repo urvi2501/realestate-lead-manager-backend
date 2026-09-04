@@ -10,7 +10,7 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "https://realestate-lead-manager-production.up.railway.app"})
 public class AuthController {
 
     private final UserRepository userRepository;
