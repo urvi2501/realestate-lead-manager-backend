@@ -85,6 +85,15 @@ public class FollowUpController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // MARK FOLLOW-UP AS COMPLETED
+@PutMapping("/{id}/complete")
+public ResponseEntity<FollowUp> completeFollowUp(@PathVariable Long id) {
+
+    return followUpService.completeFollowUp(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+}
+
     // =========================================================
     // DELETE FOLLOW-UP
     // =========================================================

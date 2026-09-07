@@ -61,6 +61,17 @@ public class FollowUpService {
                 });
     }
 
+// MARK FOLLOW-UP AS COMPLETED
+public Optional<FollowUp> completeFollowUp(Long id) {
+
+    return followUpRepository.findById(id)
+            .map(existingFollowUp -> {
+
+                existingFollowUp.setStatus("COMPLETED");
+
+                return followUpRepository.save(existingFollowUp);
+            });
+}
     // DELETE
     public boolean deleteFollowUp(Long id) {
 
