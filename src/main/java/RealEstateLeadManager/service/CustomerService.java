@@ -40,9 +40,37 @@ public class CustomerService {
                     customer.setPhone(customerDetails.getPhone());
                     customer.setEmail(customerDetails.getEmail());
                     customer.setAddress(customerDetails.getAddress());
-                    customer.setPropertyType(customerDetails.getPropertyType());
+
+                    customer.setEnquiryDateTime(
+                            customerDetails.getEnquiryDateTime());
+
+                    customer.setPurpose(customerDetails.getPurpose());
+                    customer.setCategory(customerDetails.getCategory());
+                    customer.setPropertyType(
+                            customerDetails.getPropertyType());
+
+                    customer.setOtherPropertyType(
+                            customerDetails.getOtherPropertyType());
+
                     customer.setBudget(customerDetails.getBudget());
+                    customer.setLocation(customerDetails.getLocation());
+
+                    customer.setCarpetArea(
+                            customerDetails.getCarpetArea());
+
+                    customer.setBuiltUpArea(
+                            customerDetails.getBuiltUpArea());
+
+                    customer.setSuperBuiltUpArea(
+                            customerDetails.getSuperBuiltUpArea());
+
+                    customer.setLeadSource(
+                            customerDetails.getLeadSource());
+
                     customer.setStatus(customerDetails.getStatus());
+
+                    customer.setAdditionalInformation(
+                            customerDetails.getAdditionalInformation());
 
                     return customerRepository.save(customer);
                 });

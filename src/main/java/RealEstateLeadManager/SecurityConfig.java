@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -29,20 +30,34 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
-            .cors(cors -> {})
+
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
             .sessionManagement(session ->
                 session.sessionCreationPolicy(
                     SessionCreationPolicy.STATELESS
                 )
             )
-            .authorizeHttpRequests(auth -> auth
-    .requestMatchers("/api/auth/**",
-        "/error").permitAll()
-         .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
-    .requestMatchers("/api/admin/**").hasRole("ADMIN")
-    .anyRequest().authenticated()
 
+            .authorizeHttpRequests(auth -> auth
+
+                .requestMatchers(
+                    "/api/auth/**",
+                    "/error"
+                ).permitAll()
+
+                .requestMatchers(
+                    HttpMethod.OPTIONS,
+                    "/**"
+                ).permitAll()
+
+                .requestMatchers(
+                    "/api/admin/**"
+                ).hasRole("ADMIN")
+
+                .anyRequest().authenticated()
             )
+
             .addFilterBefore(
                 jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class
@@ -58,10 +73,11 @@ public class SecurityConfig {
             new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-             List.of(
-        "http://localhost:5173",
-        "https://realestate-lead-manager-production.up.railway.app"
-    )
+            List.of(
+                "http://localhost:5173",
+                "http://localhost:5174",
+                "https://realestate-lead-manager-production.up.railway.app"
+            )
         );
 
         configuration.setAllowedMethods(
@@ -70,6 +86,7 @@ public class SecurityConfig {
                 "POST",
                 "PUT",
                 "DELETE",
+                "PATCH",
                 "OPTIONS"
             )
         );
@@ -77,7 +94,16 @@ public class SecurityConfig {
         configuration.setAllowedHeaders(
             List.of(
                 "Authorization",
-                "Content-Type"
+                "Content-Type",
+                "Accept",
+                "Origin",
+                "X-Requested-With"
+            )
+        );
+
+        configuration.setExposedHeaders(
+            List.of(
+                "Authorization"
             )
         );
 
