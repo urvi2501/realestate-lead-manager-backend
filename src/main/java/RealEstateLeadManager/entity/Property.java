@@ -115,7 +115,8 @@ public class Property {
 
     @Column(length = 5000)
     private String description;
-
+    private String ownerName;
+    private String ownerContactDetails;
     // =========================
     // CONSTRUCTORS
     // =========================
@@ -478,5 +479,20 @@ public class Property {
     public void setDescription(String description) {
         this.description = description;
     }
+    public String getOwnerName() {
+    return ownerName;
+}
+
+public void setOwnerName(String ownerName) {
+    this.ownerName = ownerName;
+}
+
+public String getOwnerContactDetails() {
+    return ownerContactDetails;
+}
+
+public void setOwnerContactDetails(String ownerContactDetails) {
+    this.ownerContactDetails = ownerContactDetails;
+}
 }
 
