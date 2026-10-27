@@ -232,6 +232,12 @@ public class PropertyService {
                     existingProperty.setDescription(
                             propertyDetails.getDescription());
 
+                            existingProperty.setOwnerName(
+        propertyDetails.getOwnerName());
+
+existingProperty.setOwnerContactDetails(
+        propertyDetails.getOwnerContactDetails());
+
                     return propertyRepository.save(existingProperty);
                 });
     }
